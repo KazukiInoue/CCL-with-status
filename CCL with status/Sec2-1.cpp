@@ -5,100 +5,98 @@
 #include<string>
 #include<strstream>
 
-void PanelBoundary(cv::Mat& src, bool up, bool bottom, bool left, bool right, const int  LINE_WIDTH) {
+//枠線かどうかを判定
+void PanelBoundary(cv::Mat& src, const int  LINE_WIDTH) {
 
-	//枠線かどうかを判定
-
-	int max = 0; //画素の最大値
-	int min = 0; //画素の最小値
-	int delta = 0; //最大値と最小値の差分
-	int dif = 0; //画素の微分
-	int fix = 0; //探索の始点のx or y
-	int end = 0;   //探索の終点のy or x
-	int boundary_len = 0; //求めるLe
+	int max[4] = {};
+	int min[4] = {};
+	int delta[4] = {};
+	int dif[4] = {};
+	int boundary_len[4] = {};
 
 	//上下左右どこの判定をするかを決める
-	//余白が上の場合
-	if (up == 1 && bottom == 0 && left == 0 && right == 0) {
-		fix = 0;
-		end = src.cols;
-	}
-	//余白が下の場合
-	if (up == 0 && bottom == 1 && left == 0 && right == 0) {
-		fix = src.rows - 1;
-		end = src.cols;
-	}
-	//余白が左の場合
-	if (up == 0 && bottom == 0 && left == 1 && right == 0) {
-		fix = 0;
-		end = src.rows;
-	}
-	//余白が右の場合
-	if (up == 0 && bottom == 0 && left == 0 && right == 1) {
-		fix = src.cols - 1;
-		end = src.rows;
-	}
+
+	//{xの始点、xの終点、yの始点、yの終点}
+	int search_range[4][4] = {
+		{ 0 , src.cols , 0 , 1 }, //余白が上
+		{ 0 , src.cols , src.rows - 1 , src.rows}, //余白が下
+		{ 0 , 1 , 0 , src.rows}, //余白が左
+		{ src.cols - 1  , src.cols , 0, src.rows}, //余白が右
+	};
+
 
 	//最大値と最小値の計算
 
 	//余白が上下の場合
-	if (left == 0 && right == 0) {
-		for (int x = 0; x < end; x++) {
+	for (int i = 0; i <= 1; i++) {
+		for (int y = search_range[i][2]; y < search_range[i][3]; y++) {
+			for (int x = search_range[i][0]; x < search_range[i][1]; x++) {
 
-			if (max < x*src.ptr<float>(fix)[x]) {
-				max = x*src.ptr<float>(fix)[x];
-			}
-			if (min > x*src.ptr<float>(fix)[x]) {
-				min = x*src.ptr<float>(fix)[x];
+				if (max[i] < x*src.ptr<float>(y)[x]) {
+					max[i] = x*src.ptr<float>(y)[x];
+				}
+				if (min[i] > x*src.ptr<float>(y)[x]) {
+					min[i] = x*src.ptr<float>(y)[x];
+				}
 			}
 		}
 	}
-	//余白が左右の場合
-	if (up == 0 && bottom == 0) {
-		for (int y = 0; y < end; y++) {
 
-			if (max < y*src.ptr<float>(y)[fix]) {
-				max = y*src.ptr<float>(y)[fix];
-			}
-			if (min > y*src.ptr<float>(y)[fix]) {
-				min = y*src.ptr<float>(y)[fix];
+	//余白が左右の場合
+	for (int i = 2; i <= 3; i++) {
+		for (int y = search_range[i][2]; y < search_range[i][3]; y++) {
+			for (int x = search_range[i][0]; x < search_range[i][1]; x++) {
+
+				if (max[i] < y*src.ptr<float>(y)[x]) {
+					max[i] = y*src.ptr<float>(y)[x];
+				}
+				if (min[i] > y*src.ptr<float>(y)[x]) {
+					min[i] = y*src.ptr<float>(y)[x];
+				}
 			}
 		}
 	}
 
 	//最大値と最小値の差分を計算
-	delta = max - min;
+	for (int i = 0; i < 4; i++) {
+		delta[i] = max[i] - min[i];
+	}
+
+	//条件を満たす線分を求める
 
 	//余白が上下の場合
-	if (left == 0 && right == 0) {
-		for (int x = 1; x < end; x++) {
-			dif += abs((src.ptr<float>(fix)[x] - src.ptr<float>(fix)[x - 1]));
-			//std::cout << "(" << x << "," << fix << ")" << ", dif = " << dif << std::endl;
-			if (delta > 0.7*x && dif > 10) {
-				boundary_len = x + 1;
-			}
-		}
-	}
-	//余白が左右の場合
-	if (up == 0 && bottom == 0) {
-		for (int y = 1; y < end; y++) {
-			dif += abs((src.ptr<float>(y)[fix] - src.ptr<float>(y - 1)[fix]));
-			//std::cout << "y = " << y << ", dif =" << dif << std::endl;
-			if (delta > 0.7*y && dif > 10) {
-				boundary_len = y + 1;
+	for (int i = 0; i <= 1; i++) {
+		for (int y = search_range[i][2]; y < search_range[i][3]; y++) {
+			for (int x = search_range[i][0] + 1; x < search_range[i][1]; x++) {
+
+				dif[i] += abs((src.ptr<float>(y)[x] - src.ptr<float>(y)[x - 1]));
+
+				if (delta[i] > 0.7*x && dif[i] > 10) {
+					boundary_len[i] = x + 1;
+				}
 			}
 		}
 	}
 
-	//線を引く
-	//余白が上下の場合
-	if (left == 0 && right == 0) {
-		cv::line(src, cv::Point(0, fix), cv::Point(boundary_len, fix), 0, LINE_WIDTH);
-	}
 	//余白が左右の場合
-	if (up == 0 && bottom == 0) {
-		cv::line(src, cv::Point(fix, 0), cv::Point(fix, boundary_len), 0, LINE_WIDTH);
+	for (int i = 2; i <= 3; i++) {
+		for (int y = search_range[i][2] + 1; y < search_range[i][3]; y++) {
+			for (int x = search_range[i][0]; x < search_range[i][1]; x++) {
+
+				dif[i] += abs((src.ptr<float>(y)[x] - src.ptr<float>(y - 1)[x]));
+
+				if (delta[i] > 0.7*y && dif[i] > 10) {
+					boundary_len[i] = y;
+				}
+			}
+		}
 	}
+
+	//いよいよ！線を引来ますぞ！！
+	cv::line(src, cv::Point(search_range[0][0], search_range[0][2]), cv::Point(boundary_len[0], search_range[0][2]), 0, LINE_WIDTH); //余白が上の時
+	cv::line(src, cv::Point(search_range[1][0], search_range[1][2]), cv::Point(boundary_len[1], search_range[1][2]), 0, LINE_WIDTH); //余白が下の時
+	cv::line(src, cv::Point(search_range[2][0], search_range[2][2]), cv::Point(search_range[2][0], boundary_len[2]), 0, LINE_WIDTH); //余白が左の時
+	cv::line(src, cv::Point(search_range[3][0], search_range[3][2]), cv::Point(search_range[3][0], boundary_len[3]), 0, LINE_WIDTH); //余白が右の時
 }
 
 

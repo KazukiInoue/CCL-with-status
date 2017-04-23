@@ -9,7 +9,7 @@
 
 const float PI = 3.14159265359;
 
-void PanelShapeExtraction(cv::Mat& src, cv::Mat& dst) {
+void PanelShapeExtraction(cv::Mat& src, cv::Mat& shape, cv::Mat& dst, const int MARGIN_WIDTH) {
 
 	const int 	area_th = 500; //本当はSec2-2で書くつもり
 
@@ -42,13 +42,13 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& dst) {
 
 	// ラベリング結果の設定
 
-	for (int i = 0; i < dst.rows; ++i) {
-		for (int j = 0; j < dst.cols; ++j) {
-			dst.ptr<cv::Vec3b>(i)[j] = colors[LabelImg.ptr<int>(i)[j]];
+	for (int i = 0; i < shape.rows; ++i) {
+		for (int j = 0; j < shape.cols; ++j) {
+			shape.ptr<cv::Vec3b>(i)[j] = colors[LabelImg.ptr<int>(i)[j]];
 		}
 	}
 
-	cv::imshow("4 Labeling", dst);
+	cv::imshow("4 Labeling", shape);
 	cv::waitKey(0);
 
 	//ROI(Region of Interest)の描画
@@ -61,7 +61,7 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& dst) {
 			int height = param[cv::ConnectedComponentsTypes::CC_STAT_HEIGHT];
 			int width = param[cv::ConnectedComponentsTypes::CC_STAT_WIDTH];
 
-			//cv::rectangle(dst, cv::Rect(left, top, width, height), cv::Scalar(0, 255, 0), 2);
+			//cv::rectangle(shape, cv::Rect(left, top, width, height), cv::Scalar(0, 255, 0), 2);
 		}
 	}
 
@@ -77,7 +77,7 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& dst) {
 			int x_center = static_cast<int>(centorids_param[0]);
 			int y_center = static_cast<int>(centorids_param[1]);
 
-			cv::circle(dst, cv::Point(x_center, y_center), 3, cv::Scalar(0, 0, 255), -1);
+			cv::circle(shape, cv::Point(x_center, y_center), 3, cv::Scalar(0, 0, 255), -1);
 
 			//ラベル付けされた領域を、それぞれの領域の中心点を原点としたデカルト座標をもとに角を見つける
 
@@ -88,7 +88,7 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& dst) {
 
 			int point_max_distance[4][2] = {}; //コマの角４点
 
-			const int START_POINT[4][2] = {
+			int START_POINT[4][2] = {
 						{ left + width / 2 ,top}, //第一象限の始点
 						{ left ,top }, //第二象限の始点
 						{ left ,top + height / 2 }, //第三象限の始点
@@ -104,7 +104,7 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& dst) {
 					for (int x = START_POINT[quadrant][0]; x < START_POINT[quadrant][0] + width / 2; x++) {
 
 						//白い場所で原点から最も遠い点を探す
-						if (dst.ptr<cv::Vec3b>(y)[x] == colors[i]) {
+						if (shape.ptr<cv::Vec3b>(y)[x] == colors[i]) {
 							int distance = pow(x - x_center, 2) + pow(y - y_center, 2);
 							if (max_distance < distance) {
 								max_distance = distance;
@@ -115,18 +115,32 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& dst) {
 					}
 				}
 
-				cv::circle(dst, cv::Point(point_max_distance[quadrant][0], point_max_distance[quadrant][1]), 5, cv::Scalar(255, 0, 0), -1);
-
-
-				cv::imshow("Corner", dst);
-				cv::waitKey(0);
+				cv::circle(shape, cv::Point(point_max_distance[quadrant][0], point_max_distance[quadrant][1]), 5, cv::Scalar(255, 0, 0), -1);
 			}
 
+
+			cv::imshow("Corner", shape);
+			cv::waitKey(0);
+
 			//４点を結ぶ
-			cv::line(dst, cv::Point(point_max_distance[1][0], point_max_distance[1][1]), cv::Point(point_max_distance[0][0], point_max_distance[0][1]), CV_RGB(255, 0, 0), 3);
-			cv::line(dst, cv::Point(point_max_distance[1][0], point_max_distance[1][1]), cv::Point(point_max_distance[2][0], point_max_distance[2][1]), CV_RGB(255, 0, 0), 3);
-			cv::line(dst, cv::Point(point_max_distance[3][0], point_max_distance[3][1]), cv::Point(point_max_distance[0][0], point_max_distance[0][1]), CV_RGB(255, 0, 0), 3);
-			cv::line(dst, cv::Point(point_max_distance[3][0], point_max_distance[3][1]), cv::Point(point_max_distance[2][0], point_max_distance[2][1]), CV_RGB(255, 0, 0), 3);
+
+			cv::line(shape, cv::Point(point_max_distance[1][0], point_max_distance[1][1]), cv::Point(point_max_distance[0][0], point_max_distance[0][1]), CV_RGB(255, 0, 0), 1);
+			cv::line(shape, cv::Point(point_max_distance[1][0], point_max_distance[1][1]), cv::Point(point_max_distance[2][0], point_max_distance[2][1]), CV_RGB(255, 0, 0), 1);
+			cv::line(shape, cv::Point(point_max_distance[3][0], point_max_distance[3][1]), cv::Point(point_max_distance[0][0], point_max_distance[0][1]), CV_RGB(255, 0, 0), 1);
+			cv::line(shape, cv::Point(point_max_distance[3][0], point_max_distance[3][1]), cv::Point(point_max_distance[2][0], point_max_distance[2][1]), CV_RGB(255, 0, 0), 1);
+
+
+			for (int count_q = 0; count_q < 4; count_q++) {
+				for (int xy = 0; xy < 2; xy++) {
+					point_max_distance[count_q][xy] -= (MARGIN_WIDTH); //Sec2-1で、書いた枠線を白線で消すときに、白線の幅をMARGIN_WIDTH + 1とした
+
+				}
+			}
+
+			cv::line(dst, cv::Point(point_max_distance[1][0], point_max_distance[1][1]), cv::Point(point_max_distance[0][0], point_max_distance[0][1]), CV_RGB(255, 0, 0), 1);
+			cv::line(dst, cv::Point(point_max_distance[1][0], point_max_distance[1][1]), cv::Point(point_max_distance[2][0], point_max_distance[2][1]), CV_RGB(255, 0, 0), 1);
+			cv::line(dst, cv::Point(point_max_distance[3][0], point_max_distance[3][1]), cv::Point(point_max_distance[0][0], point_max_distance[0][1]), CV_RGB(255, 0, 0), 1);
+			cv::line(dst, cv::Point(point_max_distance[3][0], point_max_distance[3][1]), cv::Point(point_max_distance[2][0], point_max_distance[2][1]), CV_RGB(255, 0, 0), 1);
 		}
 	}
 
@@ -147,7 +161,7 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& dst) {
 			num << i;
 
 			if (param[cv::ConnectedComponentsTypes::CC_STAT_AREA] >= area_th) {
-				cv::putText(dst, num.str(), cv::Point(x + 5, y + 20), cv::FONT_HERSHEY_COMPLEX, 0.7, cv::Scalar(0, 255, 255), 2);
+				cv::putText(shape, num.str(), cv::Point(x + 5, y + 20), cv::FONT_HERSHEY_COMPLEX, 0.7, cv::Scalar(0, 255, 255), 2);
 			}
 		}
 	}
@@ -155,8 +169,6 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& dst) {
 	//Floatに戻す
 	src.convertTo(src, CV_32F, 1 / 255.0);
 
-
-
-	cv::imshow("5 Labeling", dst);
+	cv::imshow("5 Labeling", shape);
 	cv::waitKey(0);
 }

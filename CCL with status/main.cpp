@@ -6,9 +6,7 @@
 #include<strstream>
 #include<opencv2/opencv.hpp>
 
-
-
-const int LINE_WIDTH = 2;
+const int LINE_WIDTH = 1;
 const int MARGIN_WIDTH = 10;
 
 int main()
@@ -30,9 +28,7 @@ int main()
 
 	cv::Mat src = input.clone();
 
-	//Sec2-1
-
-	//Handling unclosed panel
+	//Sec2-1 Handling unclosed panel
 
 	//二値化
 	cv::threshold(src, src, 235, 255, cv::THRESH_BINARY);
@@ -40,14 +36,8 @@ int main()
 	//スケーリング
 	src.convertTo(src, CV_32F, 1.0 / 255.0);
 
-	//余白が上の場合
-	PanelBoundary(src, 1, 0, 0, 0, LINE_WIDTH);
-	//余白が下の場合
-	PanelBoundary(src, 0, 1, 0, 0, LINE_WIDTH);
-	//余白が左の場合
-	PanelBoundary(src, 0, 0, 1, 0, LINE_WIDTH);
-	//余白が右の場合
-	PanelBoundary(src, 0, 0, 0, 1, LINE_WIDTH);
+	//枠線かどうかを判定
+	PanelBoundary(src, LINE_WIDTH);
 
 	//addmを白で初期化
 	cv::Mat addm = cv::Mat::zeros(cv::Size(src.cols + 2 * MARGIN_WIDTH, src.rows + 2 * MARGIN_WIDTH), cv::IMREAD_GRAYSCALE);
@@ -74,6 +64,7 @@ int main()
 	cv::waitKey();
 
 	//PanelBoundaryで書いた枠線を取り除く
+
 	cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH, MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH + 1);
 	cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH + 1);
 	cv::line(daubing, cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH + 1);
@@ -82,11 +73,13 @@ int main()
 	cv::imshow("remove white", daubing);
 	cv::waitKey(0);
 
-	//Sec2-2
+
+
+	//Sec2-2 Panel Block Splitting
 
 
 
-	//Sec2-3
+	//Sec2-3 Panel Shape Extraction
 
 	daubing = ~daubing;
 
@@ -94,9 +87,12 @@ int main()
 	daubing.convertTo(daubing, CV_32F, 1.0 / 255.0);
 	cv::cvtColor(daubing, daubing, CV_BGR2GRAY);
 
-	//ラべリング処理
-	cv::Mat dst = cv::Mat::zeros(daubing.size(), CV_8UC3);
-	PanelShapeExtraction(daubing, dst);
+	//パネルの枠線を切り出す
+	cv::Mat shape = cv::Mat::zeros(daubing.size(), CV_8UC3);
+	cv::Mat dst = input.clone();
+	cvtColor(dst, dst, CV_GRAY2RGB);
+
+	PanelShapeExtraction(daubing, shape, dst, MARGIN_WIDTH);
 
 	return 0;
 }
