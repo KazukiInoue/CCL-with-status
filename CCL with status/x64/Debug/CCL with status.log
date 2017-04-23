@@ -3,5 +3,23 @@ c:\opencv-3.1.0\build\include\opencv2\core\mat.hpp(1965): warning C4819: ファ�
 c:\opencv-3.1.0\build\include\opencv2\core\persistence.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 c:\opencv-3.1.0\build\include\opencv2\core\utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 c:\opencv-3.1.0\build\include\opencv2\core\utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  CCL with status.vcxproj -> C:\Users\SOGE\Documents\Visual Studio 2015\Projects\OpenCV\CCL-with-status\x64\Debug\CCL with status.exe
-  CCL with status.vcxproj -> C:\Users\SOGE\Documents\Visual Studio 2015\Projects\OpenCV\CCL-with-status\x64\Debug\CCL with status.pdb (Partial PDB)
+  Sec2-1.cpp
+c:\opencv-3.1.0\build\include\opencv2\core\mat.hpp(1965): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\opencv-3.1.0\build\include\opencv2\core\persistence.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\opencv-3.1.0\build\include\opencv2\core\utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\opencv-3.1.0\build\include\opencv2\core\utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl with status\sec2-1.cpp(49): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl with status\sec2-1.cpp(52): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl with status\sec2-1.cpp(61): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl with status\sec2-1.cpp(64): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl with status\sec2-1.cpp(75): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl with status\sec2-1.cpp(85): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  main.cpp
+c:\opencv-3.1.0\build\include\opencv2\core\mat.hpp(1965): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\opencv-3.1.0\build\include\opencv2\core\persistence.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\opencv-3.1.0\build\include\opencv2\core\utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\opencv-3.1.0\build\include\opencv2\core\utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\Users\LAB\Documents\Visual Studio 2015\Projects\OpenCV\CCL-with-status\x64\Debug\CCL with status.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
+  CCL with status.vcxproj -> C:\Users\LAB\Documents\Visual Studio 2015\Projects\OpenCV\CCL-with-status\x64\Debug\CCL with status.exe
+  CCL with status.vcxproj -> C:\Users\LAB\Documents\Visual Studio 2015\Projects\OpenCV\CCL-with-status\x64\Debug\CCL with status.pdb (Partial PDB)

@@ -120,9 +120,7 @@ void ExecuteLabeling(cv::Mat& src, cv::Mat& dst) {
 	//ラべリング処理
 	cv::Mat LabelImg = cv::Mat::zeros(src.size(), CV_8UC3);    //ラベル画像
 	cv::Mat stats = cv::Mat::zeros(src.size(), CV_8UC3);       //バウンディングボックスの範囲と面積値
-	cv::Mat centroids = cv::Mat::zeros(src.size(), CV_8UC3);   //重心(x,y)
-
-
+	cv::Mat centroids = cv::Mat::zeros(src.size(), CV_8UC3);   //ラベル付けされ領域の重心(x,y)
 
 	int nLab = cv::connectedComponentsWithStats(src, LabelImg, stats, centroids, 8, CV_32S);  //ラベル数 + 1
 
@@ -162,7 +160,7 @@ void ExecuteLabeling(cv::Mat& src, cv::Mat& dst) {
 		int height = param[cv::ConnectedComponentsTypes::CC_STAT_HEIGHT];
 		int width = param[cv::ConnectedComponentsTypes::CC_STAT_WIDTH];
 
-		cv::rectangle(dst, cv::Rect(x_start, y_start, width, height), cv::Scalar(0, 255, 0), 2);
+		//cv::rectangle(dst, cv::Rect(x_start, y_start, width, height), cv::Scalar(0, 255, 0), 2);
 	}
 
 
@@ -180,9 +178,7 @@ void ExecuteLabeling(cv::Mat& src, cv::Mat& dst) {
 
 	for (int i = 1; i < nLab; ++i) {
 		int *param = stats.ptr<int>(i);
-		std::cout << "area " << i << " = " << param[cv::ConnectedComponentsTypes::CC_STAT_AREA] << std::endl;
-
-
+		//std::cout << "area " << i << " = " << param[cv::ConnectedComponentsTypes::CC_STAT_AREA] << std::endl;
 
 		//ROIの左上に番号を書き込む
 		int x = param[cv::ConnectedComponentsTypes::CC_STAT_LEFT];
@@ -190,9 +186,9 @@ void ExecuteLabeling(cv::Mat& src, cv::Mat& dst) {
 		std::stringstream num;
 		num << i;
 
-		if (param[cv::ConnectedComponentsTypes::CC_STAT_AREA] >= area_th) {
-			cv::putText(dst, num.str(), cv::Point(x + 5, y + 20), cv::FONT_HERSHEY_COMPLEX, 0.7, cv::Scalar(0, 255, 255), 2);
-		}
+		//if (param[cv::ConnectedComponentsTypes::CC_STAT_AREA] >= area_th) {
+		//	cv::putText(dst, num.str(), cv::Point(x + 5, y + 20), cv::FONT_HERSHEY_COMPLEX, 0.7, cv::Scalar(0, 255, 255), 2);
+		//}
 
 
 		//バウンディングボックスが最大の領域を探す

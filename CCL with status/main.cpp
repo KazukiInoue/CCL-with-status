@@ -6,13 +6,15 @@
 #include<strstream>
 #include<opencv2/opencv.hpp>
 
+
+
 const int LINE_WIDTH = 2;
 const int MARGIN_WIDTH = 10;
 
 int main()
 {
 	//グレースケール入力
-	cv::Mat input = cv::imread("C:\\Users\\SOGE\\Pictures\\naruto_514\\2_remove.jpg", cv::IMREAD_GRAYSCALE);
+	cv::Mat input = cv::imread("C:\\Users\\LAB\\Pictures\\naruto_514\\2_remove.jpg", cv::IMREAD_GRAYSCALE);
 	//cv::Mat input = cv::imread("C:/Users/LAB/Pictures/white.jpg", cv::IMREAD_GRAYSCALE);
 
 	// 画像の読み込みに失敗したらエラー終了する
@@ -95,9 +97,6 @@ int main()
 	//ラべリング処理
 	cv::Mat dst = cv::Mat::zeros(daubing.size(), CV_8UC3);
 	PanelShapeExtraction(daubing, dst);
-
-	cv::imshow("re-CCL", dst);
-	cv::waitKey(0);
 
 	return 0;
 }
