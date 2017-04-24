@@ -112,7 +112,7 @@ void ExecuteLabeling(cv::Mat& src, cv::Mat& dst) {
 
 	const int area_th = src.rows*src.cols / 2830; //‚Ğ‚Æ‚Ü‚¸‚±‚Ì’l((1055+10)~(671+10)‚¾‚Æ250‚­‚ç‚¢)
 
-												  //255‚É–ß‚·
+	//255‚É–ß‚·
 	src.convertTo(src, CV_8UC3, 255.0);
 
 	//ƒ‰‚×ƒŠƒ“ƒOˆ—

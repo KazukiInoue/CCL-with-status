@@ -20,8 +20,6 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& shape, cv::Mat& dst, const int 
 	cv::Mat stats = cv::Mat::zeros(src.size(), CV_8UC3);       //バウンディングボックスの範囲と面積値
 	cv::Mat centroids = cv::Mat::zeros(src.size(), CV_8UC3);   //ラベル付けされ領域の重心(x,y)
 
-
-
 	int nLab = cv::connectedComponentsWithStats(src, LabelImg, stats, centroids, 8, CV_32S);  //ラベル数 + 1
 
 	// ラベリング結果の描画色を決定
@@ -117,7 +115,6 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& shape, cv::Mat& dst, const int 
 				cv::circle(shape, cv::Point(point_max_distance[quadrant][0], point_max_distance[quadrant][1]), 5, cv::Scalar(255, 0, 0), -1);
 			}
 
-
 			cv::imshow("Corner", shape);
 			cv::waitKey(0);
 
@@ -127,7 +124,6 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& shape, cv::Mat& dst, const int 
 			cv::line(shape, cv::Point(point_max_distance[1][0], point_max_distance[1][1]), cv::Point(point_max_distance[2][0], point_max_distance[2][1]), CV_RGB(255, 0, 0), 1);
 			cv::line(shape, cv::Point(point_max_distance[3][0], point_max_distance[3][1]), cv::Point(point_max_distance[0][0], point_max_distance[0][1]), CV_RGB(255, 0, 0), 1);
 			cv::line(shape, cv::Point(point_max_distance[3][0], point_max_distance[3][1]), cv::Point(point_max_distance[2][0], point_max_distance[2][1]), CV_RGB(255, 0, 0), 1);
-
 
 			for (int count_q = 0; count_q < 4; count_q++) {
 				for (int xy = 0; xy < 2; xy++) {
@@ -142,6 +138,8 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& shape, cv::Mat& dst, const int 
 			cv::line(dst, cv::Point(point_max_distance[3][0], point_max_distance[3][1]), cv::Point(point_max_distance[2][0], point_max_distance[2][1]), CV_RGB(255, 0, 0), 1);
 		}
 	}
+
+	cv::imshow("before", shape);
 
 	cv::imshow("Complete", dst);
 	cv::waitKey(0);

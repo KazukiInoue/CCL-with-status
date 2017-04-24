@@ -113,6 +113,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Sec2-1.cpp" />
     <ClCompile Include="Sec2-3.cpp" />
+    <ClCompile Include="Sec2-2.cpp" />
+    <ClCompile Include="Useful.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Func.h" />

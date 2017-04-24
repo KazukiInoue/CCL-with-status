@@ -1,0 +1,16 @@
+﻿  main.cpp
+C:\opencv-3.1.0\build\include\opencv2/core/mat.hpp(1965): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\opencv-3.1.0\build\include\opencv2/core/persistence.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\opencv-3.1.0\build\include\opencv2/core/utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\opencv-3.1.0\build\include\opencv2/core/utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+main.cpp(113): warning C4553: '==': 演算子にプログラム上の作用がありません。'=' を意図しましたか?
+main.cpp(128): warning C4553: '==': 演算子にプログラム上の作用がありません。'=' を意図しましたか?
+main.cpp(141): warning C4553: '==': 演算子にプログラム上の作用がありません。'=' を意図しましたか?
+main.cpp(148): warning C4553: '==': 演算子にプログラム上の作用がありません。'=' を意図しましたか?
+  コード生成しています。
+  11 of 189 functions ( 5.8%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  CCL-with-status.vcxproj -> C:\Users\LAB\Documents\Visual Studio 2015\Projects\OpenCV\CCL-with-status\x64\Release\CCL-with-status.exe
+  CCL-with-status.vcxproj -> C:\Users\LAB\Documents\Visual Studio 2015\Projects\OpenCV\CCL-with-status\x64\Release\CCL-with-status.pdb (Full PDB)
