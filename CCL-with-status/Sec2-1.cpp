@@ -147,7 +147,6 @@ void ExecuteLabeling(cv::Mat& src, cv::Mat& dst) {
 	}
 
 	cv::imshow("4 Labeling", dst);
-	cv::waitKey(0);
 
 	//ROI(Region of Interest)‚Ì•`‰æ
 	for (int i = 1; i < nLab; ++i) {
