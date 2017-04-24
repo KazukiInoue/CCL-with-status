@@ -64,75 +64,77 @@ int main()
 	cv::waitKey();
 
 	//PanelBoundaryで書いた枠線を取り除く
-//スケーリング
-	cv::cvtColor(daubing, daubing, CV_BGR2GRAY);
-	daubing.convertTo(daubing, CV_32F, 1.0 / 255.0);
 
-	std::cout << "start" << std::endl;
-	for (int x = 0; x < input.cols; x++) {
-		std::cout << "[上、真ん中、下] = "
-			<< "[" << daubing.ptr<float>(MARGIN_WIDTH - 1)[x + MARGIN_WIDTH]
-			<< ", " << daubing.ptr<float>(MARGIN_WIDTH)[x + MARGIN_WIDTH]
-			<< ", " << daubing.ptr<float>(MARGIN_WIDTH + 1)[x + MARGIN_WIDTH]
-			<< "]" << std::endl;
-	}
+	
+
+	//std::cout << "start" << std::endl;
+	//for (int x = 0; x < input.cols; x++) {
+	//	std::cout << "[上、真ん中、下] = "
+	//		<< "[" << daubing.ptr<float>(MARGIN_WIDTH - 1)[x + MARGIN_WIDTH]
+	//		<< ", " << daubing.ptr<float>(MARGIN_WIDTH)[x + MARGIN_WIDTH]
+	//		<< ", " << daubing.ptr<float>(MARGIN_WIDTH + 1)[x + MARGIN_WIDTH]
+	//		<< "]" << std::endl;
+	//}
 
 	//system("pause");
 
 	//上下の枠線
 
-	for (int x = 0; x < daubing.cols; x++) {
+	//for (int x = 0; x < daubing.cols; x++) {
 
-		if (daubing.ptr<float>(MARGIN_WIDTH - 1)[x] == 1.0f
-			&& daubing.ptr<float>(MARGIN_WIDTH)[x] == 0.0f
-			&& daubing.ptr<float>(MARGIN_WIDTH + 1)[x] == 1.0f) {
+	//	if (daubing.ptr<float>(MARGIN_WIDTH - 1)[x] == 1.0f
+	//		&& daubing.ptr<float>(MARGIN_WIDTH)[x] == 0.0f
+	//		&& daubing.ptr<float>(MARGIN_WIDTH + 1)[x] == 1.0f) {
 
-			daubing.ptr<float>(MARGIN_WIDTH)[x] == 1.0f;
-
-
-		}
-
-		std::cout << "[上、真ん中、下] = "
-			<< "[" << daubing.ptr<float>(MARGIN_WIDTH - 1)[x]
-			<< ", " << daubing.ptr<float>(MARGIN_WIDTH)[x]
-			<< ", " << daubing.ptr<float>(MARGIN_WIDTH + 1)[x]
-			<< "]" << std::endl;
+	//		daubing.ptr<float>(MARGIN_WIDTH)[x] == 1.0f;
 
 
+	//	}
 
-		if (daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH - 1)[x] == 1.0f
-			&& daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH)[x] == 0.0f
-			&& daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH + 1)[x] == 1.0f) {
+	//	std::cout << "[上、真ん中、下] = "
+	//		<< "[" << daubing.ptr<float>(MARGIN_WIDTH - 1)[x]
+	//		<< ", " << daubing.ptr<float>(MARGIN_WIDTH)[x]
+	//		<< ", " << daubing.ptr<float>(MARGIN_WIDTH + 1)[x]
+	//		<< "]" << std::endl;
 
-			daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH)[x] == 1.0f;
-		}
 
-	}
 
-	//左右の枠線
-	for (int y = 0; y < daubing.rows; y++) {
+	//	if (daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH - 1)[x] == 1.0f
+	//		&& daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH)[x] == 0.0f
+	//		&& daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH + 1)[x] == 1.0f) {
 
-		if (daubing.ptr<float>(y)[MARGIN_WIDTH - 1] == 1.0f
-			&& daubing.ptr<float>(y)[MARGIN_WIDTH] == 0.0f
-			&& daubing.ptr<float>(y)[MARGIN_WIDTH + 1] == 1.0f) {
+	//		daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH)[x] == 1.0f;
+	//	}
 
-			daubing.ptr<float>(y)[MARGIN_WIDTH] == 1.0f;
-		}
-		if (daubing.ptr<float>(y)[input.cols - 1 + MARGIN_WIDTH - 1] == 1.0f
-			&& daubing.ptr<float>(y)[input.cols - 1 + MARGIN_WIDTH] == 0.0f
-			&& daubing.ptr<float>(y)[input.cols - 1 + MARGIN_WIDTH + 1] == 1.0f) {
+	//}
 
-			daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH)[y] == 1.0f;
-		}
-	}
+	////左右の枠線
+	//for (int y = 0; y < daubing.rows; y++) {
 
-	/*cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH, MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH + 1);
-	cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH + 1);
-	cv::line(daubing, cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH + 1);
-	cv::line(daubing, cv::Point(daubing.cols - MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH + 1);
-*/
+	//	if (daubing.ptr<float>(y)[MARGIN_WIDTH - 1] == 1.0f
+	//		&& daubing.ptr<float>(y)[MARGIN_WIDTH] == 0.0f
+	//		&& daubing.ptr<float>(y)[MARGIN_WIDTH + 1] == 1.0f) {
+
+	//		daubing.ptr<float>(y)[MARGIN_WIDTH] == 1.0f;
+	//	}
+	//	if (daubing.ptr<float>(y)[input.cols - 1 + MARGIN_WIDTH - 1] == 1.0f
+	//		&& daubing.ptr<float>(y)[input.cols - 1 + MARGIN_WIDTH] == 0.0f
+	//		&& daubing.ptr<float>(y)[input.cols - 1 + MARGIN_WIDTH + 1] == 1.0f) {
+
+	//		daubing.ptr<float>(input.rows - 1 + MARGIN_WIDTH)[y] == 1.0f;
+	//	}
+	//}
+
+	cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH-1, MARGIN_WIDTH), CV_RGB(255, 255,255), LINE_WIDTH);
+	cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH-1), CV_RGB(255, 255,255), LINE_WIDTH);
+	cv::line(daubing, cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH-1), cv::Point(daubing.cols - MARGIN_WIDTH-1, daubing.rows - MARGIN_WIDTH-1), CV_RGB(255, 255,255), LINE_WIDTH);
+	cv::line(daubing, cv::Point(daubing.cols - MARGIN_WIDTH-1, MARGIN_WIDTH-1), cv::Point(daubing.cols - MARGIN_WIDTH-1, daubing.rows - MARGIN_WIDTH-1), CV_RGB(255, 255,255), LINE_WIDTH);
+
+	cv::namedWindow("remove white", CV_WINDOW_FREERATIO);
 	cv::imshow("remove white", daubing);
 	cv::imshow("src", src);
+
+
 	cv::waitKey(0);
 
 
@@ -145,7 +147,9 @@ int main()
 
 	daubing = ~daubing;
 
-
+	//スケーリング
+	daubing.convertTo(daubing, CV_32F, 1.0 / 255.0);
+	cv::cvtColor(daubing, daubing, CV_BGR2GRAY);
 
 	//パネルの枠線を切り出す
 	cv::Mat shape = cv::Mat::zeros(daubing.size(), CV_8UC3);

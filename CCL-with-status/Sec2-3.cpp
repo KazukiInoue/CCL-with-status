@@ -7,13 +7,12 @@
 
 #include<math.h>
 
-const float PI = 3.14159265359;
 
 void PanelShapeExtraction(cv::Mat& src, cv::Mat& shape, cv::Mat& dst, const int MARGIN_WIDTH) {
 
 	const int 	area_th = 500; //本当はSec2-2で書くつもり
 
-							   //srcを255に戻す
+	//srcを255に戻す
 	src.convertTo(src, CV_8UC3, 255.0);
 
 	//ラべリング処理
@@ -25,7 +24,7 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& shape, cv::Mat& dst, const int 
 
 	int nLab = cv::connectedComponentsWithStats(src, LabelImg, stats, centroids, 8, CV_32S);  //ラベル数 + 1
 
-																							  // ラベリング結果の描画色を決定
+	// ラベリング結果の描画色を決定
 	std::vector<cv::Vec3b> colors(nLab);
 	colors[0] = cv::Vec3b(0, 0, 0);  //label[0]は使わない
 	for (int i = 1; i < nLab; ++i) {
@@ -61,7 +60,7 @@ void PanelShapeExtraction(cv::Mat& src, cv::Mat& shape, cv::Mat& dst, const int 
 			int height = param[cv::ConnectedComponentsTypes::CC_STAT_HEIGHT];
 			int width = param[cv::ConnectedComponentsTypes::CC_STAT_WIDTH];
 
-			//cv::rectangle(shape, cv::Rect(left, top, width, height), cv::Scalar(0, 255, 0), 2);
+			cv::rectangle(shape, cv::Rect(left, top, width, height), cv::Scalar(0, 255, 0), 2);
 		}
 	}
 

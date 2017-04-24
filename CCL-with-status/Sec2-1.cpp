@@ -215,7 +215,6 @@ void ExecuteLabeling(cv::Mat& src, cv::Mat& dst) {
 		}
 	}
 
-
 	//Float‚É–ß‚·
 	src.convertTo(src, CV_32F, 1 / 255.0);
 }
