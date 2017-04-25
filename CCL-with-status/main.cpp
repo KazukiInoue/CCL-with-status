@@ -12,7 +12,8 @@ const int MARGIN_WIDTH = 10;
 int main()
 {
 	//ÉOÉåÅ[ÉXÉPÅ[Éãì¸óÕ
-	cv::Mat input = cv::imread("C:\\Users\\LAB\\Pictures\\naruto_514\\2_remove.jpg", cv::IMREAD_GRAYSCALE);
+	//cv::Mat input = cv::imread("C:\\Users\\LAB\\Pictures\\naruto_514\\3_remove.jpg", cv::IMREAD_GRAYSCALE);
+	cv::Mat input = cv::imread("C:\\Users\\LAB\\Pictures\\Ghoul01.jpg", cv::IMREAD_GRAYSCALE);
 
 	// âÊëúÇÃì«Ç›çûÇ›Ç…é∏îsÇµÇΩÇÁÉGÉâÅ[èIóπÇ∑ÇÈ
 	if (input.empty()) {
@@ -71,90 +72,90 @@ int main()
 
 	//PanelBoundaryÇ≈èëÇ¢ÇΩògê¸ÇéÊÇËèúÇ≠
 
-	daubing.convertTo(daubing, CV_32F, 1.0 / 255.0);
+	//daubing.convertTo(daubing, CV_32F, 1.0 / 255.0);
 
 	//è„â∫ÇÃògê¸
 
-	std::cout << "start" << std::endl;
+	//std::cout << "start" << std::endl;
 
-	for (int x = 0; x < daubing.cols; x++) {
-		if (daubing.ptr<float>(daubing.rows - MARGIN_WIDTH -1)[x] == 0.0f) {
-			std::cout << x << std::endl;
-		}
-	}
-	system("pause");
+	//for (int x = 0; x < daubing.cols; x++) {
+	//	if (daubing.ptr<float>(daubing.rows - MARGIN_WIDTH -1)[x] == 0.0f) {
+	//		std::cout << x << std::endl;
+	//	}
+	//}
+	//system("pause");
 
-	//cv::line(daubing, cv::Point(10,0), cv::Point(10, daubing.rows), CV_RGB(255,0,0), LINE_WIDTH);    
-	//cv::line(daubing, cv::Point(30, 0), cv::Point(30, daubing.rows), CV_RGB(0, 255, 255), LINE_WIDTH);
-
-
-	cv::imshow("Lines", daubing);
-	std::cout << "addm [cols, rows] = [" << addm.cols << " , " << addm.rows << "]"
-		<< std::endl
-		<< "daubing [cols, rows] = [" << daubing.cols << " , " << daubing.rows << "]"
-		<< std::endl;
+	////cv::line(daubing, cv::Point(10,0), cv::Point(10, daubing.rows), CV_RGB(255,0,0), LINE_WIDTH);    
+	////cv::line(daubing, cv::Point(30, 0), cv::Point(30, daubing.rows), CV_RGB(0, 255, 255), LINE_WIDTH);
 
 
-	for (int x = 30; x < daubing.cols; x++) {
-		daubing.ptr<float>(MARGIN_WIDTH)[x] = 1.0f;
-	}
-
-	cv::imshow("FROM 30", daubing);
-
-	cv::waitKey(0);
-
-	for (int x = 0; x < daubing.cols; x++) {
-
-		//è„ÇÃògê¸
-		if (//daubing.ptr<float>(MARGIN_WIDTH - 1)[x] == 1.0f&&
-			daubing.ptr<float>(MARGIN_WIDTH)[x] == 0.0f
-			&& daubing.ptr<float>(MARGIN_WIDTH + 1)[x] == 1.0f) {
-
-			daubing.ptr<float>(MARGIN_WIDTH)[x] == 1.0f;
-
-			std::cout << x << std::endl;
-		}
-
-		std::cout << daubing.ptr<float>(MARGIN_WIDTH - 1)[x]
-			<< " " << daubing.ptr<float>(MARGIN_WIDTH)[x]
-			<< " " << daubing.ptr<float>(MARGIN_WIDTH + 1)[x]
-			<< std::endl;
+	//cv::imshow("Lines", daubing);
+	//std::cout << "addm [cols, rows] = [" << addm.cols << " , " << addm.rows << "]"
+	//	<< std::endl
+	//	<< "daubing [cols, rows] = [" << daubing.cols << " , " << daubing.rows << "]"
+	//	<< std::endl;
 
 
-		if (daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1 - 1)[x] == 1.0f
-			&& daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1)[x] == 0.0f
-			&& daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1 + 1)[x] == 1.0f) {
+	//for (int x = 30; x < daubing.cols; x++) {
+	//	daubing.ptr<float>(MARGIN_WIDTH)[x] = 1.0f;
+	//}
 
-			daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1)[x] == 1.0f;
-		}
+	//cv::imshow("FROM 30", daubing);
 
-	}
+	//cv::waitKey(0);
 
-	//ç∂âEÇÃògê¸
-	for (int y = MARGIN_WIDTH; y < daubing.rows - MARGIN_WIDTH; y++) {
+	//for (int x = 0; x < daubing.cols; x++) {
 
-		//ç∂ÇÃògê¸
-		if (daubing.ptr<float>(y)[MARGIN_WIDTH - 1] == 1.0f
-			&& daubing.ptr<float>(y)[MARGIN_WIDTH] == 0.0f
-			&& daubing.ptr<float>(y)[MARGIN_WIDTH + 1] == 1.0f) {
+	//	//è„ÇÃògê¸
+	//	if (//daubing.ptr<float>(MARGIN_WIDTH - 1)[x] == 1.0f&&
+	//		daubing.ptr<float>(MARGIN_WIDTH)[x] == 0.0f
+	//		&& daubing.ptr<float>(MARGIN_WIDTH + 1)[x] == 1.0f) {
 
-			daubing.ptr<float>(y)[MARGIN_WIDTH] == 1.0f;
-		}
-		//âEÇÃògê¸
-		if (daubing.ptr<float>(y)[daubing.cols - MARGIN_WIDTH - 1 - 1] == 1.0f
-			&& daubing.ptr<float>(y)[daubing.cols - MARGIN_WIDTH - 1] == 0.0f
-			&& daubing.ptr<float>(y)[daubing.cols - MARGIN_WIDTH - 1 + 1] == 1.0f) {
+	//		daubing.ptr<float>(MARGIN_WIDTH)[x] == 1.0f;
 
-			daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1)[y] == 1.0f;
-		}
-	}
+	//		std::cout << x << std::endl;
+	//	}
 
-	daubing.convertTo(daubing, CV_8UC3, 255.0);
+	//	std::cout << daubing.ptr<float>(MARGIN_WIDTH - 1)[x]
+	//		<< " " << daubing.ptr<float>(MARGIN_WIDTH)[x]
+	//		<< " " << daubing.ptr<float>(MARGIN_WIDTH + 1)[x]
+	//		<< std::endl;
 
-	//cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH - 1, MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH);                                      //è„ÇÃògê¸
-	//cv::line(daubing, cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH - 1), cv::Point(daubing.cols - MARGIN_WIDTH - 1, daubing.rows - MARGIN_WIDTH - 1), CV_RGB(255, 255, 255), LINE_WIDTH); //â∫ÇÃògê¸
-	//cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH - 1), CV_RGB(255, 255, 255), LINE_WIDTH);                                        //ç∂ÇÃògê¸
-	//cv::line(daubing, cv::Point(daubing.cols - MARGIN_WIDTH - 1, MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH - 1, daubing.rows - MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH);    //âEÇÃògê¸
+
+	//	if (daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1 - 1)[x] == 1.0f
+	//		&& daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1)[x] == 0.0f
+	//		&& daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1 + 1)[x] == 1.0f) {
+
+	//		daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1)[x] == 1.0f;
+	//	}
+
+	//}
+
+	////ç∂âEÇÃògê¸
+	//for (int y = MARGIN_WIDTH; y < daubing.rows - MARGIN_WIDTH; y++) {
+
+	//	//ç∂ÇÃògê¸
+	//	if (daubing.ptr<float>(y)[MARGIN_WIDTH - 1] == 1.0f
+	//		&& daubing.ptr<float>(y)[MARGIN_WIDTH] == 0.0f
+	//		&& daubing.ptr<float>(y)[MARGIN_WIDTH + 1] == 1.0f) {
+
+	//		daubing.ptr<float>(y)[MARGIN_WIDTH] == 1.0f;
+	//	}
+	//	//âEÇÃògê¸
+	//	if (daubing.ptr<float>(y)[daubing.cols - MARGIN_WIDTH - 1 - 1] == 1.0f
+	//		&& daubing.ptr<float>(y)[daubing.cols - MARGIN_WIDTH - 1] == 0.0f
+	//		&& daubing.ptr<float>(y)[daubing.cols - MARGIN_WIDTH - 1 + 1] == 1.0f) {
+
+	//		daubing.ptr<float>(daubing.rows - MARGIN_WIDTH - 1)[y] == 1.0f;
+	//	}
+	//}
+
+	//daubing.convertTo(daubing, CV_8UC3, 255.0);
+
+	cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH - 1, MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH);                                      //è„ÇÃògê¸
+	cv::line(daubing, cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH - 1), cv::Point(daubing.cols - MARGIN_WIDTH - 1, daubing.rows - MARGIN_WIDTH - 1), CV_RGB(255, 255, 255), LINE_WIDTH); //â∫ÇÃògê¸
+	cv::line(daubing, cv::Point(MARGIN_WIDTH, MARGIN_WIDTH), cv::Point(MARGIN_WIDTH, daubing.rows - MARGIN_WIDTH - 1), CV_RGB(255, 255, 255), LINE_WIDTH);                                        //ç∂ÇÃògê¸
+	cv::line(daubing, cv::Point(daubing.cols - MARGIN_WIDTH - 1, MARGIN_WIDTH), cv::Point(daubing.cols - MARGIN_WIDTH - 1, daubing.rows - MARGIN_WIDTH), CV_RGB(255, 255, 255), LINE_WIDTH);    //âEÇÃògê¸
 
 	cv::imshow("remove white", daubing);
 
@@ -163,12 +164,16 @@ int main()
 	//Sec2-2 Panel Block Splitting
 
 	//Sec2-1Ç≈ÇÃèoóÕÇæÇ¡ÇΩdaubingÇSec2-2ÇÃì¸óÕÇ…Ç∑ÇÈ
+
+
+
 	daubing = ~daubing;
+
+	cv::imshow("Negapoji", daubing);
+	cv::waitKey(0);
 	ChangeOutput2Input(daubing);
 
 	cv::Mat split = cv::Mat::zeros(daubing.size(), CV_8UC3); //Sec2-2Ç≈ÇÃèoóÕ
-
-
 
 	PanelBlockSplitting(daubing, split, MARGIN_WIDTH);
 

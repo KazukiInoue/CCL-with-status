@@ -61,41 +61,95 @@ void PanelBlockSplitting(cv::Mat& src, cv::Mat& dst, const int MARGIN_WIDTH) {
 			int height = param[cv::ConnectedComponentsTypes::CC_STAT_HEIGHT];
 			int width = param[cv::ConnectedComponentsTypes::CC_STAT_WIDTH];
 
-			//cv::rectangle(dst, cv::Rect(left, top, width, height), cv::Scalar(0, 255, 0), 2);
+			cv::rectangle(dst, cv::Rect(left, top, width, height), cv::Scalar(0, 255, 0), 2);
 
 			std::vector<int> c_h;
+			std::vector<int> cc_v;
 			std::vector<int> g_y;
-			std::vector<int> candidate_c;
+			std::vector<int> gg_x;
+			std::vector<bool> candidate_s_y;
+			std::vector<bool> candidate_ss_x;
 
+			cv::imshow("start splitting", src);
+			cv::waitKey(0);
 
 			//g_yを格納
-			for (int y = top; y < top + height; y++) {
-
+			for (int y = 0; y < height + 2; y++) {
 				g_y.push_back(0);
 
+				src.convertTo(src, CV_8UC3, 255);
+				cv::line(src, cv::Point(left, y), cv::Point(left + width, y), CV_RGB(255, 255, 0), 1);
+
+				cv::imshow("start splitting", src);
+				cv::waitKey(0);
+				src.convertTo(src, CV_32F, 1 / 255.0);
 				for (int x = left; x < left + width; x++) {
 					if (src_color.ptr<cv::Vec3b>(y)[x] == colors[i])
-						g_y[y] += src.ptr<float>(y)[x];
+						g_y[y] += src.ptr<float>(y + top - 1)[x];
+					if (g_y[y] == 1.0f) {
+						std::cout << y << " " << g_y[y] << std::endl;
+					}
+
+
+				}
+			}
+
+			std::cout << "終わり!" << std::endl;
+			system("pause");
+
+			//g_xを格納
+			for (int x = 0; x < left + 2; x++) {
+				gg_x.push_back(0);
+				for (int y = top; y < top + height; y++) {
+					if (src_color.ptr<cv::Vec3b>(y)[x] == colors[i])
+						gg_x[x] += src.ptr<float>(y)[x + left - 1];
 				}
 			}
 
 			//c_hを計算
 			c_h.push_back(0); //c_h[0]は使わない
 
-			for (int y = 1; y < src.cols - 1; y++) {
+			for (int y = 0; y < height; y++) {
 				c_h.push_back(0);
-				c_h[y] = 2 * g_y[y] - g_y[y + 1] - g_y[y - 1];
+				c_h[y] = 2 * (1 - g_y[y + 1]) - (1 - g_y[y + 2]) - (1 - g_y[y]);  //論文と式が異なることに注意！！（ここでは余白が黒のため）
 
 				//候補を探す
-				candidate_c.push_back(0);
+				candidate_s_y.push_back(false);
+				std::cout << i << " " << y << " " << c_h[y] << std::endl;
 				if (c_h[y] > 0.1*width) {
-					candidate_c[y] = c_h[y];
+					candidate_s_y[y] = true; //candidate_s_y[0]は使わない
+				}
+				else {
+					candidate_s_y[y] = false;
 				}
 			}
 
+			//c_vを計算
+			for (int x = 0; x < left; x++) {
+				cc_v.push_back(0);
+				cc_v[x] = 2 * (1 - gg_x[x + 1]) - (1 - gg_x[x + 2]) - (1 - gg_x[x]);  //論文と式が異なることに注意！！（ここでは余白が黒のため）
+
+				//候補を探す
+				candidate_ss_x.push_back(false);
+				if (cc_v[x] > 0.1*width) {
+					candidate_ss_x[x] = true;
+				}
+				else {
+					candidate_ss_x[x] = false;
+				}
+			}
+
+			//線を引いてみる
+			for (int y = 0; y < height; y++) {
+				if (candidate_s_y[y] == true) {
+					cv::line(dst, cv::Point(left, y), cv::Point(width, y), CV_RGB(255, 0, 0), 10);
+				}
+			}
 		}
 	}
 
+	cv::imshow("Draw line", dst);
+	cv::waitKey(0);
 
 	////重心の出力
 
@@ -113,26 +167,27 @@ void PanelBlockSplitting(cv::Mat& src, cv::Mat& dst, const int MARGIN_WIDTH) {
 	//	}
 	//}
 
-	////面積値の出力
-	//for (int i = 1; i < nLab; ++i) {
-	//	int *param = stats.ptr<int>(i);
+	//面積値の出力
+	for (int i = 1; i < nLab; ++i) {
+		int *param = stats.ptr<int>(i);
 
-	//	if (param[cv::ConnectedComponentsTypes::CC_STAT_AREA] >= area_th) {
-	//		//std::cout << "area " << i << " = " << param[cv::ConnectedComponentsTypes::CC_STAT_AREA] << std::endl;
+		if (param[cv::ConnectedComponentsTypes::CC_STAT_AREA] >= area_th) {
+			//std::cout << "area " << i << " = " << param[cv::ConnectedComponentsTypes::CC_STAT_AREA] << std::endl;
 
-	//		//ROIの左上に番号を書き込む
-	//		int x = param[cv::ConnectedComponentsTypes::CC_STAT_LEFT];
-	//		int y = param[cv::ConnectedComponentsTypes::CC_STAT_TOP];
-	//		std::stringstream num;
-	//		num << i;
+			//ROIの左上に番号を書き込む
+			int x = param[cv::ConnectedComponentsTypes::CC_STAT_LEFT];
+			int y = param[cv::ConnectedComponentsTypes::CC_STAT_TOP];
+			std::stringstream num;
+			num << i;
 
-	//		if (param[cv::ConnectedComponentsTypes::CC_STAT_AREA] >= area_th) {
-	//			cv::putText(dst, num.str(), cv::Point(x + 5, y + 20), cv::FONT_HERSHEY_COMPLEX, 0.7, cv::Scalar(0, 255, 255), 2);
-	//		}
-	//	}
-	//}
+			if (param[cv::ConnectedComponentsTypes::CC_STAT_AREA] >= area_th) {
+				cv::putText(dst, num.str(), cv::Point(x + 5, y + 20), cv::FONT_HERSHEY_COMPLEX, 0.7, cv::Scalar(0, 255, 255), 2);
+			}
+		}
+	}
 
 
 
-	cv::imshow("5 Labeling", dst);
+	cv::imshow("After Splitting", dst);
+	cv::waitKey(0);
 }

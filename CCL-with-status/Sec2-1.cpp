@@ -122,7 +122,7 @@ void ExecuteLabeling(cv::Mat& src, cv::Mat& dst) {
 
 	int nLab = cv::connectedComponentsWithStats(src, LabelImg, stats, centroids, 8, CV_32S);  //ラベル数 + 1
 
-																							  // ラベリング結果の描画色を決定
+	 // ラベリング結果の描画色を決定
 	std::vector<cv::Vec3b> colors(nLab);
 	colors[0] = cv::Vec3b(0, 0, 0);  //label[0]は使わない
 	for (int i = 1; i < nLab; ++i) {

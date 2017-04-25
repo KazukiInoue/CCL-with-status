@@ -1,11 +1,9 @@
-﻿  main.cpp
+﻿  Sec2-2.cpp
 c:\opencv-3.1.0\build\include\opencv2\core\mat.hpp(1965): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 c:\opencv-3.1.0\build\include\opencv2\core\persistence.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 c:\opencv-3.1.0\build\include\opencv2\core\utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 c:\opencv-3.1.0\build\include\opencv2\core\utility.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl-with-status\main.cpp(113): warning C4553: '==': 演算子にプログラム上の作用がありません。'=' を意図しましたか?
-c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl-with-status\main.cpp(128): warning C4553: '==': 演算子にプログラム上の作用がありません。'=' を意図しましたか?
-c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl-with-status\main.cpp(141): warning C4553: '==': 演算子にプログラム上の作用がありません。'=' を意図しましたか?
-c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl-with-status\main.cpp(148): warning C4553: '==': 演算子にプログラム上の作用がありません。'=' を意図しましたか?
+c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl-with-status\sec2-2.cpp(88): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\lab\documents\visual studio 2015\projects\opencv\ccl-with-status\ccl-with-status\sec2-2.cpp(105): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
   CCL-with-status.vcxproj -> C:\Users\LAB\Documents\Visual Studio 2015\Projects\OpenCV\CCL-with-status\x64\Debug\CCL-with-status.exe
   CCL-with-status.vcxproj -> C:\Users\LAB\Documents\Visual Studio 2015\Projects\OpenCV\CCL-with-status\x64\Debug\CCL-with-status.pdb (Partial PDB)
